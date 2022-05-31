@@ -14,6 +14,7 @@
 import cv2
 import numpy as np
 import torch
+import open3d
 
 # add project directory to python path to enable relative imports
 import os
@@ -38,17 +39,24 @@ def show_pcl(pcl):
     print("student task ID_S1_EX2")
 
     # step 1 : initialize open3d with key callback and create window
+    Visual = open3d.visualization.VisualizerWithKeyCallback()
+    Visual.create_window()
     
     # step 2 : create instance of open3d point-cloud class
+    pcd = open3d.geometry.PointCloud()
 
     # step 3 : set points in pcd instance by converting the point-cloud into 3d vectors (using open3d function Vector3dVector)
+    pcd.points = open3d.utility.Vector3dVector(pcl[:, :3])
 
     # step 4 : for the first frame, add the pcd instance to visualization using add_geometry; for all other frames, use update_geometry instead
-    
+    Visual.add_geometry(pcd)
+
     # step 5 : visualize point cloud and keep window open until right-arrow is pressed (key-code 262)
+    Visual.register_key_callback(262, lambda Visual:Visual.close())
+    Visual.run()
 
     #######
-    ####### ID_S1_EX2 END #######     
+    ####### ID_S1_EX2 END #######
        
 
 # visualize range image
