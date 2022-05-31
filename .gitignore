@@ -1,0 +1,7 @@
+tools/objdet_models/darknet/
+tools/objdet_models/resnet/
+dataset/
+results/*.pkl
+misc/__pycache__/*.pyc
+student/__pycache__/*.pyc
+tools/waymo_reader/simple_waymo_open_dataset_reader/__pycache__/*.pyc
