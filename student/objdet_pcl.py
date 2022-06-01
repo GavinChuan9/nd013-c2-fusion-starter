@@ -126,11 +126,11 @@ def bev_from_pcl(lidar_pcl, configs):
 
     ## step 2 : create a copy of the lidar pcl and transform all metrix x-coordinates into bev-image coordinates    
     lidar_pcl_cpy = np.copy(lidar_pcl)
-    lidar_pcl_cpy[:, 0] = lidar_pcl_cpy[:, 0] / bev_map_discretization_x
+    lidar_pcl_cpy[:, 0] = np.int_(np.floor(lidar_pcl_cpy[:, 0] / bev_map_discretization_x))
 
     # step 3 : perform the same operation as in step 2 for the y-coordinates but make sure that no negative bev-coordinates occur
     bev_map_discretization_y = (configs.lim_y[1] - configs.lim_y[0]) / configs.bev_width
-    lidar_pcl_cpy[:, 1] = lidar_pcl_cpy[:, 1] / bev_map_discretization_y + configs.bev_width / 2
+    lidar_pcl_cpy[:, 1] = np.int_(np.floor(lidar_pcl_cpy[:, 1] / bev_map_discretization_y + (configs.bev_width + 1) / 2))
 
     # step 4 : visualize point-cloud using the function show_pcl from a previous task
     show_pcl(lidar_pcl_cpy)
