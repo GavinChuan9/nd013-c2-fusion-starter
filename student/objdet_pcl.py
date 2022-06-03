@@ -145,17 +145,34 @@ def bev_from_pcl(lidar_pcl, configs):
     print("student task ID_S2_EX2")
 
     ## step 1 : create a numpy array filled with zeros which has the same dimensions as the BEV map
+    intensity_map = np.zeros((configs.bev_height + 1, configs.bev_width + 1))
 
     # step 2 : re-arrange elements in lidar_pcl_cpy by sorting first by x, then y, then -z (use numpy.lexsort)
+    idx_height = np.lexsort((-lidar_pcl_cpy[:, 2], lidar_pcl_cpy[:, 1], lidar_pcl_cpy[:, 0]))
+    lidar_pcl_hei = lidar_pcl_cpy[idx_height]
 
     ## step 3 : extract all points with identical x and y such that only the top-most z-coordinate is kept (use numpy.unique)
     ##          also, store the number of points per x,y-cell in a variable named "counts" for use in the next task
+    _, idx_height_unique, counts = np.unique(lidar_pcl_hei[:, 0:2], axis=0, return_index=True, return_counts=True)
+    lidar_pcl_hei = lidar_pcl_hei[idx_height_unique]
 
     ## step 4 : assign the intensity value of each unique entry in lidar_top_pcl to the intensity map 
     ##          make sure that the intensity is scaled in such a way that objects of interest (e.g. vehicles) are clearly visible    
     ##          also, make sure that the influence of outliers is mitigated by normalizing intensity on the difference between the max. and min. value within the point cloud
+    intensity_channel = lidar_pcl_hei[:, 3]
+    intensity_channel_max = np.percentile(intensity_channel, 99)
+    intensity_channel_min = np.percentile(intensity_channel, 1)
+    intensity_channel[intensity_channel > intensity_channel_max] = intensity_channel_max
+    intensity_channel[intensity_channel < intensity_channel_min] = intensity_channel_min
+
+    intensity_map[np.int_(lidar_pcl_hei[:, 0]), np.int_(lidar_pcl_hei[:, 1])] = \
+        (intensity_channel - intensity_channel_min) / (intensity_channel_max - intensity_channel_min)
+    intensity_map = (intensity_map * 255).astype(np.uint8)
 
     ## step 5 : temporarily visualize the intensity map using OpenCV to make sure that vehicles separate well from the background
+    cv2.imshow('intensity_map', intensity_map)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
     #######
     ####### ID_S2_EX2 END ####### 
