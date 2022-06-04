@@ -210,7 +210,9 @@ def detect_objects(input_bev_maps, model, configs):
             # detections size (batch_size, K, 10)
             detections = decode(outputs['hm_cen'], outputs['cen_offset'], outputs['direction'], outputs['z_coor'],
                                 outputs['dim'], K=configs.K)
-
+            detections = detections.cpu().numpy().astype(np.float32)
+            detections = post_processing(detections, configs)
+            detections = detections[0][1] # 1 denotes the class id for the object type vehicle
             #######
             ####### ID_S3_EX1-5 END #######     
 
