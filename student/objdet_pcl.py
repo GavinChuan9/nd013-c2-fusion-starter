@@ -165,12 +165,10 @@ def bev_from_pcl(lidar_pcl, configs):
     intensity_channel[intensity_channel > intensity_channel_max] = intensity_channel_max
     intensity_channel[intensity_channel < intensity_channel_min] = intensity_channel_min
 
-    intensity_map[np.int_(lidar_pcl_top[:, 0]), np.int_(lidar_pcl_top[:, 1])] = \
-        (intensity_channel - intensity_channel_min) / (intensity_channel_max - intensity_channel_min)
-    intensity_map = (intensity_map * 255).astype(np.uint8)
+    intensity_map[np.int_(lidar_pcl_top[:, 0]), np.int_(lidar_pcl_top[:, 1])] = intensity_channel / (intensity_channel_max - intensity_channel_min)
 
     ## step 5 : temporarily visualize the intensity map using OpenCV to make sure that vehicles separate well from the background
-    cv2.imshow('intensity_map', intensity_map)
+    cv2.imshow('intensity_map', (intensity_map * 255).astype(np.uint8))
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
@@ -189,11 +187,10 @@ def bev_from_pcl(lidar_pcl, configs):
     ## step 2 : assign the height value of each unique entry in lidar_top_pcl to the height map 
     ##          make sure that each entry is normalized on the difference between the upper and lower height defined in the config file
     ##          use the lidar_pcl_top data structure from the previous task to access the pixels of the height_map
-    height_map[np.int_(lidar_pcl_top[:, 0]), np.int_(lidar_pcl_top[:, 1])] = lidar_pcl_top[:, 2] / (configs.lim_z[1] - configs.lim_z[0])
-    height_map = (height_map * 255).astype(np.uint8)
+    height_map[np.int_(lidar_pcl_top[:, 0]), np.int_(lidar_pcl_top[:, 1])] = lidar_pcl_top[:, 2] / float(np.abs(configs.lim_z[1] - configs.lim_z[0]))
 
     ## step 3 : temporarily visualize the intensity map using OpenCV to make sure that vehicles separate well from the background
-    cv2.imshow('height_map', height_map)
+    cv2.imshow('height_map', (height_map*255).astype(np.uint8))
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
