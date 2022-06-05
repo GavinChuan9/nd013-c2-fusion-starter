@@ -52,8 +52,8 @@ def show_pcl(pcl):
     Visual.add_geometry(pcd)
 
     # step 5 : visualize point cloud and keep window open until right-arrow is pressed (key-code 262)
-    Visual.register_key_callback(262, lambda Visual:Visual.close())
-    Visual.run()
+    #Visual.register_key_callback(262, lambda Visual:Visual.close())
+    #Visual.run()
 
     #######
     ####### ID_S1_EX2 END #######
@@ -133,7 +133,7 @@ def bev_from_pcl(lidar_pcl, configs):
     lidar_pcl_cpy[:, 1] = np.int_(np.floor(lidar_pcl_cpy[:, 1] / bev_map_discretization_y + (configs.bev_width + 1) / 2))
 
     # step 4 : visualize point-cloud using the function show_pcl from a previous task
-    show_pcl(lidar_pcl_cpy)
+    #show_pcl(lidar_pcl_cpy)
     
     #######
     ####### ID_S2_EX1 END #######     
