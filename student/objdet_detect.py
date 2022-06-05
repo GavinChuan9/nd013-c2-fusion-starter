@@ -102,6 +102,8 @@ def load_configs_model(model_name='darknet', configs=None):
     else:
         raise ValueError("Error: Invalid model name")
 
+    configs.min_iou = 0.5 # ID_S4_EX1
+    
     # GPU vs. CPU
     configs.no_cuda = True # if true, cuda is not used
     configs.gpu_idx = 0  # GPU index to use.

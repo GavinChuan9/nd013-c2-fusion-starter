@@ -49,17 +49,37 @@ def measure_detection_performance(detections, labels, labels_valid, min_iou=0.5)
             print("student task ID_S4_EX1 ")
 
             ## step 1 : extract the four corners of the current label bounding-box
-            
-            ## step 2 : loop over all detected objects
+            label_center_x = label.box.center_x
+            label_center_y = label.box.center_y
+            label_width = label.box.width
+            label_length = label.box.length
+            label_heading = label.box.heading
+            label_height = label.box.height
 
-                ## step 3 : extract the four corners of the current detection
+            label_corners = tools.compute_box_corners(label_center_x, label_center_y, label_width, label_length, label_heading)
+
+            ## step 2 : loop over all detected objects
+            for obj in detections:
                 
+                ## step 3 : extract the four corners of the current detection
+                obj_id, obj_bev_x, obj_bev_y, obj_z, obj_h, obj_bev_w, obj_bev_l, obj_yaw = obj
+                obj_corners = tools.compute_box_corners(obj_bev_x, obj_bev_y, obj_bev_w, obj_bev_l, obj_yaw)
+
                 ## step 4 : computer the center distance between label and detection bounding-box in x, y, and z
+                dist_x = label_center_x - obj_bev_x.item()
+                dist_y = label_center_y - obj_bev_y.item()
+                dist_z = label_height - obj_z
                 
                 ## step 5 : compute the intersection over union (IOU) between label and detection bounding-box
-                
+                poly_label = Polygon(label_corners)
+                poly_obj = Polygon(obj_corners)
+                iou = poly_label.intersection(poly_obj).area / poly_label.union(poly_obj).area
+
                 ## step 6 : if IOU exceeds min_iou threshold, store [iou,dist_x, dist_y, dist_z] in matches_lab_det and increase the TP count
-                
+                if iou > min_iou:
+                    matches_lab_det.append([iou, dist_x, dist_y, dist_z])
+                    true_positives += 1
+
             #######
             ####### ID_S4_EX1 END #######     
             
