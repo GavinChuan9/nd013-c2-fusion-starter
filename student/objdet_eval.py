@@ -131,15 +131,19 @@ def compute_performance_stats(det_performance_all):
     print('student task ID_S4_EX3')
 
     ## step 1 : extract the total number of positives, true positives, false negatives and false positives
-    
+    pos_negs = np.array(pos_negs)
+    tp = sum(pos_negs[:, 1])
+    fn = sum(pos_negs[:, 2])
+    fp = sum(pos_negs[:, 3])
+
     ## step 2 : compute precision
-    precision = 0.0
+    precision = tp / (tp + fp)
 
     ## step 3 : compute recall 
-    recall = 0.0
+    recall = tp / (tp + fn)
 
     #######    
-    ####### ID_S4_EX3 END #######     
+    ####### ID_S4_EX3 END #######   
     print('precision = ' + str(precision) + ", recall = " + str(recall))   
 
     # serialize intersection-over-union and deviations in x,y,z
