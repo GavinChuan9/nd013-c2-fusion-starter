@@ -52,8 +52,8 @@ def show_pcl(pcl):
     Visual.add_geometry(pcd)
 
     # step 5 : visualize point cloud and keep window open until right-arrow is pressed (key-code 262)
-    Visual.register_key_callback(262, lambda Visual:Visual.close())
-    Visual.run()
+    #Visual.register_key_callback(262, lambda Visual:Visual.close())
+    #Visual.run()
 
     #######
     ####### ID_S1_EX2 END #######
@@ -133,7 +133,7 @@ def bev_from_pcl(lidar_pcl, configs):
     lidar_pcl_cpy[:, 1] = np.int_(np.floor(lidar_pcl_cpy[:, 1] / bev_map_discretization_y + (configs.bev_width + 1) / 2))
 
     # step 4 : visualize point-cloud using the function show_pcl from a previous task
-    show_pcl(lidar_pcl_cpy)
+    #show_pcl(lidar_pcl_cpy)
     
     #######
     ####### ID_S2_EX1 END #######     
@@ -168,9 +168,9 @@ def bev_from_pcl(lidar_pcl, configs):
     intensity_map[np.int_(lidar_pcl_top[:, 0]), np.int_(lidar_pcl_top[:, 1])] = intensity_channel / (intensity_channel_max - intensity_channel_min)
 
     ## step 5 : temporarily visualize the intensity map using OpenCV to make sure that vehicles separate well from the background
-    cv2.imshow('intensity_map', (intensity_map * 255).astype(np.uint8))
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    #cv2.imshow('intensity_map', (intensity_map * 255).astype(np.uint8))
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
 
     #######
     ####### ID_S2_EX2 END ####### 
@@ -190,9 +190,9 @@ def bev_from_pcl(lidar_pcl, configs):
     height_map[np.int_(lidar_pcl_top[:, 0]), np.int_(lidar_pcl_top[:, 1])] = lidar_pcl_top[:, 2] / float(np.abs(configs.lim_z[1] - configs.lim_z[0]))
 
     ## step 3 : temporarily visualize the intensity map using OpenCV to make sure that vehicles separate well from the background
-    cv2.imshow('height_map', (height_map*255).astype(np.uint8))
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    #cv2.imshow('height_map', (height_map*255).astype(np.uint8))
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
 
     #######
     ####### ID_S2_EX3 END #######       
