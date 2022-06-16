@@ -1,4 +1,4 @@
-# Writeup: Visualize point-cloud (ID_S1_EX2)
+# Mid-Term Project: 3D Object Detection
 
 ### 1. Find 10 examples of vehicles with varying degrees of visibility in the point-cloud
 1. Front of the car at short range<br/>
