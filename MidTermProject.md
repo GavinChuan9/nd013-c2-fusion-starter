@@ -48,5 +48,10 @@
 ### EX2: Compute intensity layer of bev-map
 ![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/ID_S2_EX2/img/midterm/S2_EX2.png?raw=true)
 
-### EX.3 Compute height layer of bev-map
+### EX3: Compute height layer of bev-map
 ![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/ID_S2_EX3/img/midterm/S2_EX3.png?raw=true)
+
+## Step 3. Model-based Object Detection in BEV Image
+
+### EX1: Add a second model from a GitHub repo
+![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/ID_S3_EX1/img/midterm/S3_EX1.png?raw=true)
