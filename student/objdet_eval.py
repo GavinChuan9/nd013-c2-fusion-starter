@@ -49,17 +49,37 @@ def measure_detection_performance(detections, labels, labels_valid, min_iou=0.5)
             print("student task ID_S4_EX1 ")
 
             ## step 1 : extract the four corners of the current label bounding-box
-            
-            ## step 2 : loop over all detected objects
+            label_center_x = label.box.center_x
+            label_center_y = label.box.center_y
+            label_center_z = label.box.center_z
+            label_width = label.box.width
+            label_length = label.box.length
+            label_heading = label.box.heading
 
-                ## step 3 : extract the four corners of the current detection
+            label_corners = tools.compute_box_corners(label_center_x, label_center_y, label_width, label_length, label_heading)
+
+            ## step 2 : loop over all detected objects
+            for obj in detections:
                 
+                ## step 3 : extract the four corners of the current detection
+                obj_id, obj_bev_x, obj_bev_y, obj_z, obj_h, obj_bev_w, obj_bev_l, obj_yaw = obj
+                obj_corners = tools.compute_box_corners(obj_bev_x, obj_bev_y, obj_bev_w, obj_bev_l, obj_yaw)
+
                 ## step 4 : computer the center distance between label and detection bounding-box in x, y, and z
+                dist_x = label_center_x - obj_bev_x.item()
+                dist_y = label_center_y - obj_bev_y.item()
+                dist_z = label_center_z - obj_z
                 
                 ## step 5 : compute the intersection over union (IOU) between label and detection bounding-box
-                
+                poly_label = Polygon(label_corners)
+                poly_obj = Polygon(obj_corners)
+                iou = poly_label.intersection(poly_obj).area / poly_label.union(poly_obj).area
+
                 ## step 6 : if IOU exceeds min_iou threshold, store [iou,dist_x, dist_y, dist_z] in matches_lab_det and increase the TP count
-                
+                if iou > min_iou:
+                    matches_lab_det.append([iou, dist_x, dist_y, dist_z])
+                    true_positives += 1
+
             #######
             ####### ID_S4_EX1 END #######     
             
@@ -77,13 +97,13 @@ def measure_detection_performance(detections, labels, labels_valid, min_iou=0.5)
     # compute positives and negatives for precision/recall
     
     ## step 1 : compute the total number of positives present in the scene
-    all_positives = 0
+    all_positives = labels_valid.sum()
 
     ## step 2 : compute the number of false negatives
-    false_negatives = 0
+    false_negatives = all_positives - true_positives
 
     ## step 3 : compute the number of false positives
-    false_positives = 0
+    false_positives = len(detections) - true_positives
     
     #######
     ####### ID_S4_EX2 END #######     
@@ -111,15 +131,19 @@ def compute_performance_stats(det_performance_all):
     print('student task ID_S4_EX3')
 
     ## step 1 : extract the total number of positives, true positives, false negatives and false positives
-    
+    pos_negs = np.array(pos_negs)
+    tp = sum(pos_negs[:, 1])
+    fn = sum(pos_negs[:, 2])
+    fp = sum(pos_negs[:, 3])
+
     ## step 2 : compute precision
-    precision = 0.0
+    precision = tp / (tp + fp)
 
     ## step 3 : compute recall 
-    recall = 0.0
+    recall = tp / (tp + fn)
 
     #######    
-    ####### ID_S4_EX3 END #######     
+    ####### ID_S4_EX3 END #######   
     print('precision = ' + str(precision) + ", recall = " + str(recall))   
 
     # serialize intersection-over-union and deviations in x,y,z
