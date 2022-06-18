@@ -44,3 +44,6 @@
 
 ### EX1: Convert sensor coordinates to bev-map coordinates
 ![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/ID_S2_EX1/img/midterm/S2_EX1.png?raw=true)
+
+### EX2: Compute intensity layer of bev-map
+![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/ID_S2_EX2/img/midterm/S2_EX2.png?raw=true)
