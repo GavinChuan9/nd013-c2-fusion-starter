@@ -1,4 +1,5 @@
 # Mid-Term Project: 3D Object Detection
+
 ## Step 1. Compute Lidar Point-Cloud from Range Image
 
 ### EX1: Visualize range image channels 
@@ -26,9 +27,7 @@
 ![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/ID_S1_EX2/img/midterm/9_new.png?raw=true)
 * Some vehicle features are blocked by shrub<br/>
 ![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/ID_S1_EX2/img/midterm/10_new.png?raw=true)
-
 #### 2. Try to identify vehicle features that appear stable in most of the inspected examples and describe them
-
 #### Vehicle features that appear stable in most of the inspected examples:
 * The vehicles running at the same direction:<br/>
     * Rear bumper<br/>
@@ -40,3 +39,8 @@
     * Doors are hard to perceive at long range<br/>
     * Windshield (light is difficult to reflect, intensity value almost equal to zero[black color])<br/>
 ![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/ID_S1_EX2/img/midterm/2_2.png?raw=true)
+
+## Step 2. Create Birds-Eye View from Lidar PCL
+
+### EX1: Convert sensor coordinates to bev-map coordinates
+![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/ID_S2_EX1/img/midterm/S2_EX1.png?raw=true)
