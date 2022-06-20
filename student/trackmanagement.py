@@ -109,10 +109,9 @@ class Trackmanagement:
 
         # delete old tracks   
         for track in self.track_list:
-            # Delete tracks if the score is too low or P is too big
             if track.state == 'confirmed' and track.score < params.delete_threshold:
                 self.delete_track(track)
-            if (track.state == 'initialized' or track.state == 'tentative') and \
+            if (track.state == 'initialized' or track.state == 'tentative' or track.state == 'confirmed') and \
             (track.P[0, 0] > params.max_P or track.P[1, 1] > params.max_P):
                 self.delete_track(track)
 
