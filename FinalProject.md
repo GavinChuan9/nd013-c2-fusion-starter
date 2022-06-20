@@ -8,6 +8,9 @@
 ### Initialize, update and delete tracks
 ![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/FP_S2/img/final/S2_RMSE.png?raw=true)
 
+## Step 3. Data Association
+### Associate measurements to tracks with nearest neighbor association
+![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/FP_S3/img/final/S3_RMSE.png?raw=true)
 
 # Writeup: Track 3D-Objects Over Time
 
