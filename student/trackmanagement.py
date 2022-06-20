@@ -35,20 +35,18 @@ class Track:
         # - initialize track state and track score with appropriate values
         ############
 
-        self.x = np.matrix([[49.53980697],
-                        [ 3.41006279],
-                        [ 0.91790581],
-                        [ 0.        ],
-                        [ 0.        ],
-                        [ 0.        ]])
-        self.P = np.matrix([[9.0e-02, 0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00],
-                        [0.0e+00, 9.0e-02, 0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00],
-                        [0.0e+00, 0.0e+00, 6.4e-03, 0.0e+00, 0.0e+00, 0.0e+00],
-                        [0.0e+00, 0.0e+00, 0.0e+00, 2.5e+03, 0.0e+00, 0.0e+00],
-                        [0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00, 2.5e+03, 0.0e+00],
-                        [0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00, 2.5e+01]])
-        self.state = 'confirmed'
-        self.score = 0
+        self.x = np.matrix(np.zeros((6, 1)))
+        self.x[0:3] = M_rot * meas.z
+
+        self.P = np.matrix(np.zeros((6, 6)))
+        P_pos = M_rot * meas.R * np.transpose(M_rot)
+        self.P[0:3, 0:3] = P_pos
+        self.P[3, 3] = params.sigma_p44
+        self.P[4, 4] = params.sigma_p55
+        self.P[5, 5] = params.sigma_p66
+
+        self.state = 'initialized'
+        self.score = 1.0/params.window
         
         ############
         # END student code
@@ -107,9 +105,16 @@ class Trackmanagement:
             if meas_list: # if not empty
                 if meas_list[0].sensor.in_fov(track.x):
                     # your code goes here
-                    pass 
+                    track.score -= 1.0/params.window
 
         # delete old tracks   
+        for track in self.track_list:
+            # Delete tracks if the score is too low or P is too big
+            if track.state == 'confirmed' and track.score < params.delete_threshold:
+                self.delete_track(track)
+            if (track.state == 'initialized' or track.state == 'tentative') and \
+            (track.P[0, 0] > params.max_P or track.P[1, 1] > params.max_P):
+                self.delete_track(track)
 
         ############
         # END student code
@@ -140,7 +145,13 @@ class Trackmanagement:
         # - set track state to 'tentative' or 'confirmed'
         ############
 
-        pass
+        if round(track.score, 5) < 1.0:
+            track.score += 1.0/params.window
+
+        if track.score >= params.confirmed_threshold:
+            track.state = 'confirmed'
+        elif track.score >= params.delete_threshold:
+            track.state = 'tentative'
         
         ############
         # END student code
