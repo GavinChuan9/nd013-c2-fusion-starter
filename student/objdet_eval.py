@@ -66,8 +66,8 @@ def measure_detection_performance(detections, labels, labels_valid, min_iou=0.5)
                 obj_corners = tools.compute_box_corners(obj_bev_x, obj_bev_y, obj_bev_w, obj_bev_l, obj_yaw)
 
                 ## step 4 : computer the center distance between label and detection bounding-box in x, y, and z
-                dist_x = label_center_x - obj_bev_x.item()
-                dist_y = label_center_y - obj_bev_y.item()
+                dist_x = float(label_center_x - obj_bev_x)
+                dist_y = float(label_center_y - obj_bev_y)
                 dist_z = label_center_z - obj_z
                 
                 ## step 5 : compute the intersection over union (IOU) between label and detection bounding-box
