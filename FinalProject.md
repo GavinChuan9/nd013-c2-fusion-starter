@@ -1,6 +1,10 @@
-# Writeup: Track 3D-Objects Over Time
+# Final Project: Sensor Fusion and Object Tracking
 
-Please use this starter template to answer the following questions:
+## Step 1. Tracking
+### Track objects over time with a Kalman Filter
+![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/FP_S1/img/final/S1_RMSE.png?raw=true)
+
+# Writeup: Track 3D-Objects Over Time
 
 ### 1. Write a short recap of the four tracking steps and what you implemented there (filter, track management, association, camera fusion). Which results did you achieve? Which part of the project was most difficult for you to complete, and why?
 
