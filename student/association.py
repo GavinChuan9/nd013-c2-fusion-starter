@@ -100,8 +100,10 @@ class Association:
         ############
         # TODO Step 3: return True if measurement lies inside gate, otherwise False
         ############
-
-        limit = chi2.ppf(params.gating_threshold, 2) #degree of freedom: 2
+        if sensor.name == 'lidar':
+            limit = chi2.ppf(params.gating_threshold, 2) #degree of freedom: 2
+        elif sensor.name == 'camera':
+            limit = chi2.ppf(params.gating_threshold, 2) #degree of freedom: 2
 
         if MHD < limit:
             return True
