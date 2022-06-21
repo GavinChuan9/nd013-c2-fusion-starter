@@ -41,9 +41,9 @@ class Track:
         self.P = np.matrix(np.zeros((6, 6)))
         P_pos = M_rot * meas.R * np.transpose(M_rot)
         self.P[0:3, 0:3] = P_pos
-        self.P[3, 3] = params.sigma_p44
-        self.P[4, 4] = params.sigma_p55
-        self.P[5, 5] = params.sigma_p66
+        self.P[3, 3] = params.sigma_p44**2
+        self.P[4, 4] = params.sigma_p55**2
+        self.P[5, 5] = params.sigma_p66**2
 
         self.state = 'initialized'
         self.score = 1.0/params.window
@@ -105,7 +105,8 @@ class Trackmanagement:
             if meas_list: # if not empty
                 if meas_list[0].sensor.in_fov(track.x):
                     # your code goes here
-                    track.score -= 1.0/params.window
+                    if (track.score - 1.0/params.window) > 0.0:
+                        track.score -= 1.0/params.window
 
         # delete old tracks   
         for track in self.track_list:

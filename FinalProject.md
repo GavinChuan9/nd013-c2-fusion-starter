@@ -12,6 +12,10 @@
 ### Associate measurements to tracks with nearest neighbor association
 ![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/FP_S3/img/final/S3_RMSE.png?raw=true)
 
+## Step 4. Sensor Fusion
+### Fuse measurements from lidar and camera
+![alt text](https://github.com/GavinChuan9/nd013-c2-fusion-starter/blob/FP_S4/img/final/S4_RMSE.png?raw=true)
+
 # Writeup: Track 3D-Objects Over Time
 
 ### 1. Write a short recap of the four tracking steps and what you implemented there (filter, track management, association, camera fusion). Which results did you achieve? Which part of the project was most difficult for you to complete, and why?
