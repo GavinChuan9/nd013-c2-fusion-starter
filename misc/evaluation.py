@@ -229,18 +229,23 @@ def plot_rmse(manager, all_labels, configs_det):
         plt.show()
         
         
-def make_movie(path):
+def make_movie(path, last_frame):
     # read track plots
-    images = [img for img in sorted(os.listdir(path)) if img.endswith(".png")]
-    frame = cv2.imread(os.path.join(path, images[0]))
-    height, width, layers = frame.shape
+    images = [img for img in sorted(os.listdir(path)) if img.endswith(".jpg")]
+    last_frame = cv2.imread(os.path.join(path, images[last_frame]))
+    height, width, layers = last_frame.shape
 
     # save with 10fps to result dir
     video = cv2.VideoWriter(os.path.join(path, 'my_tracking_results.avi'), 0, 10, (width,height))
 
     for image in images:
         fname = os.path.join(path, image)
-        video.write(cv2.imread(fname))
+        current_frame = cv2.imread(fname)
+        if current_frame.shape[0] == height and current_frame.shape[1] == width:
+            video.write(current_frame)
+        else:
+            print("The shape of {0} {1} are different with the shape of last frame {2}"\
+                .format(image, current_frame.shape[0:2], last_frame.shape[0:2]))
         os.remove(fname) # clean up
 
     cv2.destroyAllWindows()
