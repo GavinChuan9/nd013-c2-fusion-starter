@@ -258,7 +258,7 @@ while True:
                                         valid_label_flags, image, camera, configs_det)
                 if 'make_tracking_movie' in exec_list:
                     # save track plots to file
-                    fname = results_fullpath + '/tracking%03d.png' % cnt_frame
+                    fname = results_fullpath + '/tracking%03d.jpg' % cnt_frame
                     print('Saving frame', fname)
                     fig.savefig(fname)
 
